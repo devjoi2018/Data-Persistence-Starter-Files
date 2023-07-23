@@ -6,20 +6,18 @@ using UnityEngine.UI;
 
 public class MainManager : MonoBehaviour
 {
-    public static MainManager Instance;
     public Brick BrickPrefab;
     public int LineCount = 6;
     public Rigidbody Ball;
 
     public Text ScoreText;
+    public Text bestScoreText;
     public GameObject GameOverText;
 
     private bool m_Started = false;
     private int m_Points;
 
     private bool m_GameOver = false;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -71,11 +69,21 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        UpdateBestScore();
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
 
-    public void Awake()
+    public void UpdateBestScore()
     {
+        if (GameManager.Instance.playerName != null)
+        {
+            bestScoreText.text = $"Best Score : {GameManager.Instance.playerName} {m_Points}";
+        }
+        else
+        {
+            bestScoreText.text = $"Best Score : {m_Points}";
+        }
     }
+
 }
